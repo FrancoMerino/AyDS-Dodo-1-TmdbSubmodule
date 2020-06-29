@@ -6,7 +6,7 @@ import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 import java.io.IOException
 
-internal interface TmdbResponseToTmdbMovie {
+interface TmdbResponseToTmdbMovie {
     fun getMovie(movie: String, year: Int, body: String?): TmdbMovieResponse
 }
 
