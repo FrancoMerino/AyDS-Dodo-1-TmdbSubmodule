@@ -7,7 +7,7 @@ import com.google.gson.JsonObject
 import java.io.IOException
 
 interface TmdbResponseToTmdbMovie {
-    fun getMovie(movie: String, year: Int, body: String?): TmdbMovieResponse
+    fun getMovie(movie: String, year: String, body: String?): TmdbMovieResponse
 }
 
 class TmdbResponseToTmdbMovieImp : TmdbResponseToTmdbMovie {
@@ -20,7 +20,7 @@ class TmdbResponseToTmdbMovieImp : TmdbResponseToTmdbMovie {
         private const val RELEASE_DATE = "release_date"
     }
 
-    override fun getMovie(movie: String, year: Int, body: String?): TmdbMovieResponse {
+    override fun getMovie(movie: String, year: String, body: String?): TmdbMovieResponse {
         try {
             val resultIterator: Iterator<JsonElement> = getJsonElementIterator(body) as Iterator<JsonElement>
             val result: JsonObject? = getInfoFromTmdb(resultIterator, year)
@@ -48,12 +48,12 @@ class TmdbResponseToTmdbMovieImp : TmdbResponseToTmdbMovie {
         return backdropPath
     }
 
-    private fun getInfoFromTmdb(resultIterator: Iterator<JsonElement>, movieYear: Int): JsonObject? {
+    private fun getInfoFromTmdb(resultIterator: Iterator<JsonElement>, movieYear: String): JsonObject? {
         var result: JsonObject? = null
         while (resultIterator.hasNext()) {
             result = resultIterator.next().asJsonObject
             val year = result[RELEASE_DATE].asString.split("-").toTypedArray()[0]
-            if (year == movieYear.toString()) break
+            if (year == movieYear) break
         }
         return result
     }

@@ -4,5 +4,5 @@ import ayds.dodo1.tmbd.external.tmdb.TmdbMovieResponse
 
 
 interface ExternalService {
-    fun getMovie(movie : String, year: Int) : TmdbMovieResponse
+    fun getMovie(movie : String, year: String) : TmdbMovieResponse
 }

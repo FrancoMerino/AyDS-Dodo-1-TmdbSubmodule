@@ -8,7 +8,7 @@ class TmdbService(
         private val tmdbMovieResolver: TmdbResponseToTmdbMovie
 ) : ExternalService{
 
-    override fun getMovie(movie: String, year: Int): TmdbMovieResponse {
+    override fun getMovie(movie: String, year: String): TmdbMovieResponse {
         val callResponse = getTmdbMovieFromService(movie)
         return tmdbMovieResolver.getMovie(movie, year, callResponse?.body())
     }
