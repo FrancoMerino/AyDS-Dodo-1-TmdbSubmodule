@@ -29,8 +29,10 @@ class TmdbResponseToTmdbMovieImp : TmdbResponseToTmdbMovie {
                 val posterPath = result[POSTER_PATH_JSON]
                 val extract = result[OVERVIEW_JSON]
                 if (extract !== JsonNull.INSTANCE && posterPath !== JsonNull.INSTANCE) {
-                    val path = if (backdropPath != null && backdropPath != "") IMAGE_URL_BASE + backdropPath else NonExistentTmdbMovieResponse.IMAGE_NOT_FOUND
-                    return createTmdbMovie(movie, extract.asString, path, posterPath.asString)
+                    val path =
+                        if (backdropPath != null && backdropPath != "") IMAGE_URL_BASE + backdropPath else NonExistentTmdbMovieResponse.IMAGE_NOT_FOUND
+                    val posterUrl = IMAGE_URL_BASE + posterPath.asString
+                    return createTmdbMovie(movie, extract.asString, path, posterUrl)
                 }
             }
         } catch (e1: IOException) {
@@ -65,12 +67,12 @@ class TmdbResponseToTmdbMovieImp : TmdbResponseToTmdbMovie {
         return jobj[RESULTS_JSON].asJsonArray.iterator()
     }
 
-    private fun createTmdbMovie(movie: String, text: String, path: String, posterPath: String): TmdbMovieResponse {
+    private fun createTmdbMovie(movie: String, text: String, path: String, posterUrl: String): TmdbMovieResponse {
         val tmdbMovie = TmdbMovieResponse()
         tmdbMovie.title = movie
         tmdbMovie.plot = text
         tmdbMovie.imageUrl = path
-        tmdbMovie.posterUrl = posterPath
+        tmdbMovie.posterUrl = posterUrl
         return tmdbMovie
     }
 }
